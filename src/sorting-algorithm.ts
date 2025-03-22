@@ -19,3 +19,34 @@ export const bubbleSort = (elements: number[]) => {
 
   return elements;
 };
+
+export const quickSort = (elements: number[]) => {
+  if (elements.length === 0) {
+    return elements;
+  }
+
+  const pivot = elements.shift() as number;
+
+  elements.push(pivot);
+  let pivotIndex = elements.length - 1;
+
+  for (let index = 0; index < pivotIndex; index++) {
+    const current = elements[index];
+
+    if (current >= pivot) {
+      elements.splice(index, 1);
+      elements.push(current);
+      pivotIndex--;
+      index--;
+    }
+  }
+
+  if (pivotIndex !== elements.length) {
+    const leftPartition = quickSort(elements.slice(0, pivotIndex));
+    const rightPartition = quickSort(elements.slice(pivotIndex + 1));
+
+    return [...leftPartition, pivot, ...rightPartition];
+  }
+
+  return elements;
+};
